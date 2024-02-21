@@ -14,3 +14,5 @@ const dataTwo = [12, 5, -5, 0, 4]
 
 printForecast(dataOne)
 printForecast(dataTwo)
+
+// transform array into string
