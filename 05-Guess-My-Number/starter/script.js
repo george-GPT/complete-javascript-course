@@ -1,36 +1,70 @@
 'use strict';
 // dom references
-document.querySelector('.between');
-document.querySelector('.btn again');
-document.querySelector('.number');
-document.querySelector('.guess');
-document.querySelector('.message');
-document.querySelector('.label-score');
-document.querySelector('.label-highscore');
-document.querySelector('.highscore');
+const message = document.querySelector('.message');
+const scoreDisplay = document.querySelector('.score');
+const highScoreDisplay = document.querySelector('.highscore');
+const userGuess = document.querySelector('.guess');
+const checkButton = document.querySelector('.btn.check');
+const restartButton = document.querySelector('.btn.again');
 
-// user inputs a number, guessing what secret number is between 1-20
-// after guessing, score goes down one and a response is printed with feedback
-//
+// game state variables
+let correctNumber = generateRandomNumber();
+let score = 20;
+let highScore = 0;
 
-function computerNumber() {
-  const correctNumber = Math.trunc(Math.random() * 20) + 1;
-  return correctNumber;
+// initialize game for user
+updateScoreDisplay();
+highScoreDisplay.innerText = highScore;
+userGuess.value = '';
+restartButton.disabled = true;
+
+function generateRandomNumber() {
+  return Math.floor(Math.random() * 20) + 1;
 }
 
-function userGuess(correctNumber) {
-  // declare variable to compare with cpu number
-  // user input == number input
-  // number input is valid
-  // if number === computerNumber then game over, update score, update highscore, display start over button.
-  // if number is greater than choice, display "too high"
-  // if number is lower than choice, display, "too low"
-  // after each guess, increment decreasing of score number
-  // if score number = 0, game over screen, update score, display start over screen
+function checkGuess() {
+  // Directly read the number value; empty or invalid input becomes NaN
+  const guess = Number(userGuess.value);
+
+  // Check if the guess is within the valid range
+  if (guess < 1 || guess > 20) {
+    message.innerText = 'Please select a valid number between 1-20';
+    return;
+  }
+
+  // Compare guess with the correct number
+  if (guess === correctNumber) {
+    handleCorrectGuess();
+  } else {
+    handleIncorrectGuess(guess);
+  }
+  userGuess.value = ''; // Clear input field
 }
 
-function resetGame() {
-  // reset all html input data except for highscore
+function restartGame() {
+  score = 20;
+  correctNumber = generateRandomNumber();
+  message.innerText = 'New game started! Guess a number.';
+  updateScoreDisplay();
+  userGuess.disabled = false;
+  restartButton.disabled = true;
+  checkButton.disabled = true;
 }
 
-// bonus: make the highscore persist
+function endGame() {
+  userGuess.disabled = true;
+  restartButton.disabled = false;
+  checkButton.disabled = true;
+}
+
+function updateScoreDisplay() {
+  scoreDisplay.innerText = score;
+}
+
+// Event listeners
+checkButton.addEventListener('click', checkGuess);
+restartButton.addEventListener('click', restartGame);
+userGuess.addEventListener('input', () => {
+  // enable the check button if there's input
+  checkButton.disabled = !userGuess.value;
+});
