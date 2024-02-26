@@ -1,0 +1,26 @@
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+player.powerUpActiveTwo = true
+player.powerUpEndTimeTwo = Date.now() + powerUp.SpeedDuration //
+
+
+function applySpeedBoost() {
+  // Directly set the player's speed to the boosted speed
+  player.speed = 5 // Set the boosted speed
+
+  // Set a flag and record the start time of the boost
+  player.powerUpActive = true
+  player.powerUpActiveTwo = true
+  player.powerUpStartTime = Date.now() // Record the start time instead of the end time
+  player.powerUpEndTimeTwo = Date.now() + powerUp.SpeedDuration //
+}

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -22,13 +22,15 @@
 
       /* Fun CSS styling */
       .popup h2 {
-        font-size: 24px;
+        font-size: 45px;
+        font-weight: bold;
+        font-family: Comic sans-serif;
         color: #ff00ff;
         margin-bottom: 10px;
       }
 
       .popup p {
-        font-size: 18px;
+        font-size: 24px;
       }
 
       .popup button {
@@ -36,9 +38,9 @@
         color: #fff;
         border: none;
         padding: 10px 20px;
-        font-size: 16px;
+        font-size: 45px;
         cursor: pointer;
-        margin-top: 20px;
+        margin-top: 250px;
         border-radius: 5px;
       }
 
@@ -51,6 +53,7 @@
     <!-- Popup Window -->
     <div class="popup" id="popup">
       <h2>Welcome to Raccoon Tycoon!</h2>
+      <br />
       <p>Rojee is hungry and wants a little snack.</p>
       <p>
         Help her collect as many snacks as possible before the time runs out!
@@ -66,8 +69,8 @@
     <script>
       // Function to close the popup
       function closePopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'none';
+        var popup = document.getElementById('popup')
+        popup.style.display = 'none'
       }
     </script>
 
