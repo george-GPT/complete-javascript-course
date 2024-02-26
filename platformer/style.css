@@ -1,0 +1,25 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+#gameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('keith.jpg');
+  background-repeat: repeat;
+}
+
+canvas {
+  background-color: #000;
+}
+
+#gameCanvas {
+  width: 800px;
+  height: 600px;
+}

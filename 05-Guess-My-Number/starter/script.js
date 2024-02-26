@@ -1,5 +1,6 @@
 'use strict';
-// dom references
+
+// DOM references
 const message = document.querySelector('.message');
 const scoreDisplay = document.querySelector('.score');
 const highScoreDisplay = document.querySelector('.highscore');
@@ -7,64 +8,64 @@ const userGuess = document.querySelector('.guess');
 const checkButton = document.querySelector('.btn.check');
 const restartButton = document.querySelector('.btn.again');
 
-// game state variables
+// Initialize global variables (game logic)
 let correctNumber = generateRandomNumber();
 let score = 20;
 let highScore = 0;
 
-// initialize game for user
+// Initialize global variables (user interface)
 updateScoreDisplay();
-highScoreDisplay.innerText = highScore;
-userGuess.value = '';
+scoreDisplay.innerText = score; // Use the variable score for initialization
+highScoreDisplay.innerText = highScore; // Initialize with highScore variable
+userGuess.value = ''; // Use value for input elements
 restartButton.disabled = true;
 
+// Function to generate CPU number
 function generateRandomNumber() {
-  return Math.floor(Math.random() * 20) + 1;
+  return Math.floor(Math.random() * 20) + 1; // Add return statement
 }
 
+// Function to check user guess with CPU number
 function checkGuess() {
-  // Directly read the number value; empty or invalid input becomes NaN
   const guess = Number(userGuess.value);
-
-  // Check if the guess is within the valid range
   if (guess < 1 || guess > 20) {
-    message.innerText = 'Please select a valid number between 1-20';
-    return;
-  }
-
-  // Compare guess with the correct number
-  if (guess === correctNumber) {
-    handleCorrectGuess();
+    message.innerText = 'Please enter a valid number from 1-20.';
+  } else if (guess === correctNumber) {
+    message.innerText = 'Correct!'; // Add a success message
+    endGame();
   } else {
-    handleIncorrectGuess(guess);
+    message.innerText = guess > correctNumber ? 'Too high!' : 'Too low!';
+    score -= 1;
+    updateScoreDisplay();
   }
-  userGuess.value = ''; // Clear input field
-}
-
-function restartGame() {
-  score = 20;
-  correctNumber = generateRandomNumber();
-  message.innerText = 'New game started! Guess a number.';
-  updateScoreDisplay();
-  userGuess.disabled = false;
-  restartButton.disabled = true;
-  checkButton.disabled = true;
-}
-
-function endGame() {
-  userGuess.disabled = true;
-  restartButton.disabled = false;
-  checkButton.disabled = true;
 }
 
 function updateScoreDisplay() {
   scoreDisplay.innerText = score;
 }
 
-// Event listeners
+function restartGame() {
+  correctNumber = generateRandomNumber();
+  score = 20;
+  updateScoreDisplay(); // Use the function to update the score display
+  userGuess.value = ''; // Clear the input field
+  userGuess.disabled = false;
+  checkButton.disabled = true; // Disable check button until input is entered
+  restartButton.disabled = true;
+  message.innerText = 'Start guessing...'; // Reset message
+}
+
+function endGame() {
+  userGuess.disabled = true;
+  restartButton.disabled = false;
+  if (score > highScore) {
+    highScore = score; // Update highScore variable
+    highScoreDisplay.innerText = highScore; // Update display
+  }
+}
+
 checkButton.addEventListener('click', checkGuess);
 restartButton.addEventListener('click', restartGame);
-userGuess.addEventListener('input', () => {
-  // enable the check button if there's input
-  checkButton.disabled = !userGuess.value;
+userGuess.addEventListener('input', function () {
+  checkButton.disabled = userGuess.value === ''; // Simplified logic for disabling/enabling check button
 });
